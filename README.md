@@ -8,3 +8,8 @@ Comet - An Extremely Extensible Admin for Meteor
 ```
 Readme coming soon.
 ```
+
+
+![alt tag](https://raw.githubusercontent.com/Strngs/comet/master/readme/comet_dashboard.png)
+
+![alt tag](https://raw.githubusercontent.com/Strngs/comet/master/readme/comet_add_user.png)
