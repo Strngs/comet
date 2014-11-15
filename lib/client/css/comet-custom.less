@@ -1,0 +1,113 @@
+.comet-layout {
+  .wrapper {
+    position: absolute;
+    min-height: 100%;
+    width: 100%;
+    top: 50px;
+  }
+  .left-side {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+
+    .sidebar {
+      .sidebar-menu {
+        li {
+          a {
+            padding: 12px 9px;
+            border-left: 1px solid transparent;
+
+            .fa {
+              font-size: 22px;
+              width: 28px;
+            }
+          }
+          &.on {
+            a {
+              border-left: 1px solid #00FFFF;
+            }
+          }
+
+          ul {
+            margin: 0;
+
+            li {
+              border: 0;
+              a {
+                background: #222;
+                margin-left: 0!important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .right-side {
+    z-index: 20;
+    width: 100%;
+    margin-left: 40px;
+    padding-right: 50px;
+    position: absolute;
+  }
+
+  .collapse-left + .right-side {
+    margin-left: 0!important;
+  }
+
+}
+.admin-alert {
+	margin-left: 0!important;
+}
+
+@media screen and (max-width: 992px) {
+  .comet-layout {
+    .right-side {
+      margin-left: 0;
+      padding-right: 0;
+    }
+
+    .row-offcanvas-left {
+      top: 50px;
+
+      .sidebar-offcanvas {
+        left: 0;
+      }
+
+      &.active {
+        left: 0;
+        width: 100%;
+      }
+    }
+
+    .relative {
+      position: absolute;
+
+      .right-side {
+        z-index: 9;
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .comet-layout {
+    min-width: 500px;
+
+    .header {
+      .navbar {
+        .sidebar-toggle {
+          position: absolute;
+          z-index: 1;
+        }
+      }
+    }
+
+    .right-side {
+      min-width: 500px;
+      padding-right: 0;
+    }
+  }
+}

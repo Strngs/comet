@@ -1,0 +1,131 @@
+<template name="CometDashboard">
+	{{#each cometWidgets}}
+		{{> UI.dynamic template=template data=data}}
+	{{else}}
+		{{> cometDefaultWidgets}}
+	{{/each}}
+</template>
+
+<template name="CometDashboardNew">
+	{{> cometAlert}}
+	{{#if cometTemplate comet_collection 'new'}}
+		{{#with cometTemplate comet_collection 'new'}}
+			{{> UI.dynamic template=name data=data }}
+		{{/with}}
+	{{else}}
+		{{> quickForm id="comet_insert" collection=comet_collection fields=comet_fields omitFields=comet_omit_fields buttonContent='Create'}}
+	{{/if}}
+</template>
+
+<template name="CometDashboardEdit">
+	{{> cometAlert}}
+	{{#if cometTemplate comet_collection 'edit'}}
+		{{#with cometTemplate comet_collection 'edit'}}
+			{{> UI.dynamic template=name data=data }}
+		{{/with}}
+	{{else}}
+		{{#if comet_current_doc}}
+			{{> quickForm id="comet_update" collection=comet_collection doc=comet_current_doc fields=comet_fields omitFields=comet_omit_fields buttonContent='Update'}}
+		{{/if}}
+	{{/if}}
+</template>
+
+<template name="CometDashboardView">
+	{{> cometAlert}}
+	{{#if cometTemplate comet_collection 'view'}}
+		{{#with cometTemplate comet_collection 'view'}}
+			{{> UI.dynamic template=name data=data }}
+		{{/with}}
+	{{else}}
+		{{#if documents}}
+    	{{> ReactiveDatatable tableData=cometDataTableData options=cometDataTableOpts }}
+		{{else}}
+			<div class="alert alert-info">
+				<p>There are no visible items in this collection.</p>
+				<p><a href="{{pathFor 'cometDashboardNew' collection=comet_collection}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add one</a></p>
+			</div>
+		{{/if}}
+	{{/if}}
+</template>
+
+<template name="CometDashboardUsersNew">
+	{{> cometAlert}}
+	{{# autoForm id="cometNewUser" schema=CometSchemas.newUser type="method" meteormethod="cometNewUser"}}
+		{{>afQuickField name="email"}}
+		{{>afQuickField name="chooseOwnPassword"}}
+
+		{{#if afFieldValueIs name="chooseOwnPassword" value=false}}
+			{{>afQuickField name="password"}}
+			{{>afQuickField name="sendPassword"}}
+		{{/if}}
+
+		<button type="submit" class="btn btn-primary">Add User</button>
+	{{/autoForm}}
+
+</template>
+
+<template name="CometDashboardUsersView">
+	{{> cometAlert}}
+	{{> ReactiveDatatable tableData=cometDataTableData options=cometDataTableOpts }}
+</template>
+
+<template name="CometDashboardUsersEdit">
+	{{> cometAlert}}
+	{{#if cometUserSchemaExists}}
+		{{> quickForm id="comet_update_user" buttonContent="Update" buttonClasses="btn btn-primary btn-sm" collection=cometGetUsers doc=comet_current_doc omitFields="roles,services"}}
+		<hr/>
+	{{/if}}
+
+	<h4>User Roles</h4>
+	{{#each roles}}
+		<button class="btn btn-primary btn-xs btn-remove-role" role="{{this}}" user="{{comet_current_id}}">{{this}}</button>
+	{{/each}}
+	{{#each otherRoles}}
+		<button class="btn btn-default btn-xs btn-add-role" role="{{this}}" user="{{comet_current_id}}">{{this}}</button>
+	{{/each}}
+	{{#if roles}}
+		<p style="margin-top:5px;">Click a role to toggle it.</p>
+	{{else}}
+		<p>User not in any roles. Click a role to add it to a user.</p>
+	{{/if}}
+
+	<hr/>
+
+	<h4>Reset Password</h4>
+	{{#autoForm id="cometSendResetPasswordEmail" schema=CometSchemas.sendResetPasswordEmail type="method" meteormethod="cometSendResetPasswordEmail"}}
+		<div class="form-group hidden">
+			<label class="control-label" for="title">ID</label>
+			<input value="{{comet_current_id}}" type="text" name="_id" omitfields="createdAtupdatedAt" required="" data-schema-key="_id" class="form-control" autocomplete="off">
+			<span class="help-block"></span>
+		</div>
+		<p>Send a reset password email to {{comet_current_doc.emails.[0].address}}</p>
+		<button type="submit" class="btn btn-primary btn-sm">Send Email</button>
+	{{/autoForm}}
+
+	<hr/>
+
+	<h4>Change Password</h4>
+	{{#autoForm id="cometChangePassword" schema=CometSchemas.changePassword type="method" meteormethod="cometChangePassword"}}
+		<div class="form-group hidden">
+			<label class="control-label" for="title">ID</label>
+			<input value="{{comet_current_id}}" type="text" name="_id" omitfields="createdAtupdatedAt" required="" data-schema-key="_id" class="form-control" autocomplete="off">
+			<span class="help-block"></span>
+		</div>
+		{{>afQuickField name="password"}}
+		<button type="submit" class="btn btn-primary btn-sm">Change Password</button>
+	{{/autoForm}}
+</template>
+
+<template name="cometAlert">
+	{{#if $.Session.get 'cometSuccess'}}
+		<div class="alert alert-success admin-alert">
+			{{$.Session.get 'cometSuccess'}}
+		</div>
+	{{/if}}
+
+	{{#if $.Session.get 'cometError'}}
+		<div class="alert alert-danger admin-alert">
+			{{$.Session.get 'cometError'}}
+		</div>
+	{{/if}}
+</template>

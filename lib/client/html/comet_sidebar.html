@@ -1,0 +1,45 @@
+<template name="CometSidebar">
+	<aside class="left-side sidebar-offcanvas">
+		<section class="sidebar">
+			<ul class="sidebar-menu">
+				<li class="{{isNotActiveRoute regex='cometDashboardUsersNew|cometDashboardUsersView|cometDashboardUsersEdit|cometDashboardView|cometDashboardNew|cometDashboardEdit' className='on'}}">
+					<a href="{{pathFor 'cometDashboard'}}">
+						<i class="fa fa-dashboard"></i> <span>Dashboard</span>
+					</a>
+				</li>
+				{{#each comet_collections}}
+				<li class="treeview {{isActivePath regex=this.name className='on'}}">
+					<a href="#">
+						<i class="fa fa-{{this.icon}}"></i>
+						<span>{{this.label}}</span>
+						<i class="fa fa-angle-left pull-right"></i>
+					</a>
+					<ul class="treeview-menu">
+						<li>
+							<a href="{{pathFor 'cometDashboardNew' collection=this.name}}"><i class="fa fa-plus"></i> New</a>
+						</li>
+						<li>
+							<a href="{{pathFor 'cometDashboardView' collection=this.name}}"><i class="fa fa-eye"></i> View All</a>
+						</li>
+					</ul>
+				</li>
+				{{/each}}
+				<li class="treeview {{isActivePath regex='Users' className='on'}}">
+					<a href="#">
+						<i class="fa fa-user"></i>
+						<span>Users</span>
+						<i class="fa fa-angle-left pull-right"></i>
+					</a>
+					<ul class="treeview-menu">
+						<li>
+							<a href="{{pathFor 'cometDashboardUsersNew'}}"><i class="fa fa-plus"></i> New</a>
+						</li>
+						<li>
+							<a href="{{pathFor 'cometDashboardUsersView'}}"><i class="fa fa-eye"></i> View All</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</section>
+	</aside>
+</template>
