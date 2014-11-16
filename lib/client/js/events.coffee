@@ -20,7 +20,7 @@ Template.CometDashboardUsersEdit.events
 		Meteor.call 'cometAddUserToRole', $(e.target).attr('user'), $(e.target).attr('role')
 	'click .btn-remove-role': (e,t) ->
 		console.log 'removing user'
-		Meteor.call 'cometRemoveUserToRole', $(e.target).attr('user'), $(e.target).attr('role')
+		Meteor.call 'cometRemoveUserFromRole', $(e.target).attr('user'), $(e.target).attr('role')
 
 Template.CometHeader.events
 	'click .btn-sign-out': () ->

@@ -64,6 +64,7 @@ Package.on_use(function(api){
     ], 'client');
 
   api.add_files([
+    'lib/server/cometStartup.coffee',
     'lib/server/publish.coffee',
     'lib/server/methods.coffee'
   ], 'server');

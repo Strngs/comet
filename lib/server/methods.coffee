@@ -44,7 +44,7 @@ Meteor.methods
 						)
 
 	cometUpdateUser: (modifier,_id)->
-		if Roles.userIsInRole this.userId, ['admin']
+		if Roles.userIsInRole this.userId, ['superadmin', 'admin']
 			Future = Npm.require('fibers/future');
 			fut = new Future();
 			Meteor.users.update {_id:_id},modifier,(e,r)->
@@ -52,31 +52,31 @@ Meteor.methods
 			return fut.wait()
 
 	cometSendResetPasswordEmail: (doc)->
-		if Roles.userIsInRole this.userId, ['admin']
+		if Roles.userIsInRole this.userId, ['superadmin', 'admin']
 			console.log 'Changing password for user ' + doc._id
 			Accounts.sendResetPasswordEmail(doc._id)
 
 	cometChangePassword: (doc)->
-		if Roles.userIsInRole this.userId, ['admin']
+		if Roles.userIsInRole this.userId, ['superadmin', 'admin']
 			console.log 'Changing password for user ' + doc._id
 			Accounts.setPassword(doc._id, doc.password)
 			label: 'Email user their new password'
 
-	cometCheckAdmin: ->
-		if this.userId and !Roles.userIsInRole this.userId, ['admin']
-			email = Meteor.users.findOne(_id:this.userId).emails[0].address
-			if typeof CometConfig != 'undefined' and typeof CometConfig.cometEmails == 'object'
-				cometEmails = CometConfig.adminEmails
-				if cometEmails.indexOf(email) > -1
-					console.log 'Adding admin user: ' + email
-					Roles.addUsersToRoles this.userId, ['admin']
-			else if this.userId == Meteor.users.findOne({},{sort:{createdAt:1}})._id
-				console.log 'Making first user admin: ' + email
-				Roles.addUsersToRoles this.userId, ['admin']
-
 	cometAddUserToRole: (_id,role)->
-		if Roles.userIsInRole this.userId, ['admin']
+		if Roles.userIsInRole this.userId, ['superadmin', 'admin']
+			if Roles.userIsInRole this.userId, ['admin'] and role == 'superadmin'
+				Meteor.call 'cometThrowUserError', "error", "You do not have permission to do this"
+
 			Roles.addUsersToRoles _id, role
-	cometRemoveUserToRole: (_id,role)->
-		if Roles.userIsInRole this.userId, ['admin']
+
+	cometRemoveUserFromRole: (_id,role)->
+		if Roles.userIsInRole this.userId, ['superadmin', 'admin']
+			if Roles.userIsInRole this.userId, ['admin']
+				targetUser = Meteor.users.find(_id, {fields: {_id: 1}})
+				if Roles.userIsInRole targetUser[0]._id, ['superadmin']
+					Meteor.call 'cometThrowUserError', "error", "You do not have permission to do this"
+					return
 			Roles.removeUsersFromRoles _id, role
+
+	cometThrowUserError: (type, text) ->
+		console[type] text

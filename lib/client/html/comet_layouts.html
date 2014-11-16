@@ -1,7 +1,7 @@
 <template name="CometLayout">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	{{#if CometConfig}}
- 		{{#if isInRole 'admin'}}
+ 		{{#if isInRole 'superadmin' or isInRole 'admin'}}
 			<div class="comet-layout">
 				<div class="skin-{{cometGetSkin}}">
 					{{> CometHeader}}

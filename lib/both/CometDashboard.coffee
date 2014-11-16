@@ -60,12 +60,19 @@ formatters = {
 			email = formatters.getUserEmail(user[0])
 			formatters.link('/admin/Users/' + id + '/edit', email)
 
-	icon: (iconClass) ->
-		'<i class="fa fa-' + iconClass + '"></i>';
+	icon: (iconClass, iconAlt) ->
+		altText = ""
+		if typeof iconAlt != 'undefined'
+			altText = ' data-placement="right" data-toggle="tooltip" title="' + iconAlt + '"'
+
+		'<i class="fa fa-' + iconClass + '"' + altText + '></i>';
 
 	isAdmin: (id) ->
-		if Roles.userIsInRole(id, 'admin')
-			formatters.icon('check')
+		if Roles.userIsInRole(id, ['superadmin', 'admin'])
+			if Roles.userIsInRole(id, ['superadmin'])
+				formatters.icon('space-shuttle', 'Super Admin')
+			else
+				formatters.icon('check', 'Admin')
 		else
 			formatters.icon('times')
 
@@ -112,8 +119,7 @@ CometDashboard =
 			@next()
 
 	checkAdmin: ->
-		if not Roles.userIsInRole Meteor.userId(), ['admin']
-			Meteor.call 'cometCheckAdmin'
+		if not Roles.userIsInRole Meteor.userId(), ['superadmin', 'admin']
 			if (typeof CometConfig?.nonAdminRedirectRoute == "string")
 			  Router.go CometConfig.nonAdminRedirectRoute
 		if typeof @.next == 'function'
