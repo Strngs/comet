@@ -37,36 +37,37 @@ Package.on_use(function(api){
 
   api.add_files([
     'lib/both/CometDashboard.coffee',
+    'lib/both/CometConfig.coffee',
     'lib/both/router.coffee'
   ], both);
 
   api.add_files([
-    'lib/client/html/comet_templates.html',
-    'lib/client/html/comet_widgets.html',
-    'lib/client/html/comet_layouts.html',
-    'lib/client/html/comet_sidebar.html',
-    'lib/client/html/comet_header.html',
-    'lib/client/css/comet-layout.less',
-    'lib/client/css/comet-custom.less',
-    'lib/client/lib/slim_scroll.js',
-    'lib/client/lib/jquery.hoverIntent.minified.js',
-    'lib/client/js/comet_layout.js',
-    'lib/client/js/helpers.coffee',
-    'lib/client/js/events.coffee',
-    'lib/client/js/autoForm.coffee',
-    'lib/client/lib/bootstrap-datatables/css/bootstrap-datatables.css',
-    'lib/client/lib/bootstrap-datatables/js/bootstrap-datatables.js',
-    'lib/client/lib/bootstrap-datatables/images/sort_asc_disabled.png',
-    'lib/client/lib/bootstrap-datatables/images/sort_asc.png',
-    'lib/client/lib/bootstrap-datatables/images/sort_both.png',
-    'lib/client/lib/bootstrap-datatables/images/sort_desc_disabled.png',
-    'lib/client/lib/bootstrap-datatables/images/sort_desc.png'
+    'client/html/comet_templates.html',
+    'client/html/comet_widgets.html',
+    'client/html/comet_layouts.html',
+    'client/html/comet_sidebar.html',
+    'client/html/comet_header.html',
+    'client/css/comet-layout.less',
+    'client/css/comet-custom.less',
+    'lib/client/slim_scroll.js',
+    'lib/client/jquery.hoverIntent.minified.js',
+    'client/js/comet_layout.js',
+    'client/js/helpers.coffee',
+    'client/js/events.coffee',
+    'client/js/autoForm.coffee',
+    'lib/client/bootstrap-datatables/css/bootstrap-datatables.css',
+    'lib/client/bootstrap-datatables/js/bootstrap-datatables.js',
+    'lib/client/bootstrap-datatables/images/sort_asc_disabled.png',
+    'lib/client/bootstrap-datatables/images/sort_asc.png',
+    'lib/client/bootstrap-datatables/images/sort_both.png',
+    'lib/client/bootstrap-datatables/images/sort_desc_disabled.png',
+    'lib/client/bootstrap-datatables/images/sort_desc.png'
     ], 'client');
 
   api.add_files([
     'lib/server/cometStartup.coffee',
-    'lib/server/publish.coffee',
-    'lib/server/methods.coffee'
+    'server/publish.coffee',
+    'server/methods.coffee'
   ], 'server');
 
   api.export('CometDashboard',both)

@@ -19,19 +19,19 @@
 								<li><a href="/admin/">Dashboard</a></li>
 									{{#if $.Session.get 'comet_collection'}}
 										<li>
-											<a href="/admin/{{comet_collection}}/">{{cometCollectionLabel comet_collection}}</a>
+											<a href="/admin/collection/{{comet_collection}}/">{{cometCollectionLabel comet_collection}}</a>
 										</li>
 									{{/if}}
 
 									{{#if $.Session.equals 'comet_collection_page' 'new'}}
 										<li>
-											<a href="/admin/{{comet_collection}}/new">New</a>
+											<a href="/admin/collection/{{comet_collection}}/new">New</a>
 										</li>
 									{{/if}}
 
 									{{#if $.Session.equals 'comet_collection_page' 'edit'}}
 										<li>
-											<a href="/admin/{{comet_collection}}/edit">Edit</a>
+											<a href="/admin/collection/{{comet_collection}}/edit">Edit</a>
 										</li>
 									{{/if}}
 								</ol>

@@ -129,3 +129,33 @@
 		</div>
 	{{/if}}
 </template>
+
+<template name="CometDashboardConfig">
+	{{> cometAlert}}
+	<div role="tabpanel">
+
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">General</a></li>
+    <li role="presentation"><a href="#collections" aria-controls="collections" role="tab" data-toggle="tab">Collections</a></li>
+    <li role="presentation"><a href="#widgets" aria-controls="widgets" role="tab" data-toggle="tab">Widgets</a></li>
+    <li role="presentation"><a href="#autoForm" aria-controls="autoform" role="tab" data-toggle="tab">AutoForm</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="general">
+    	{{> quickForm id="cometGeneralConfigUpdate" buttonContent="Update" buttonClasses="btn btn-primary btn-sm" schema=CometSchemas.CometGeneralConfig}}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="collections">
+    	{{> quickForm id="cometCollectionConfigUpdate" buttonContent="Update" buttonClasses="btn btn-primary btn-sm" schema=CometSchemas.CometCollectionConfig}}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="widgets">
+    	{{> quickForm id="cometGeneralWidgetUpdate" buttonContent="Update" buttonClasses="btn btn-primary btn-sm" schema=CometSchemas.CometWidgetConfig}}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="autoform">
+    	{{> quickForm id="cometAutoFormConfigUpdate" buttonContent="Update" buttonClasses="btn btn-primary btn-sm" schema=CometSchemas.CometAutoFormConfig}}
+    </div>
+  </div>
+
+</div>
+</template>

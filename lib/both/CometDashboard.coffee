@@ -117,23 +117,21 @@ CometDashboard =
 		Session.set 'cometError', null
 		if typeof @.next == 'function'
 			@next()
-
 	checkAdmin: ->
 		if not Roles.userIsInRole Meteor.userId(), ['superadmin', 'admin']
 			if (typeof CometConfig?.nonAdminRedirectRoute == "string")
 			  Router.go CometConfig.nonAdminRedirectRoute
 		if typeof @.next == 'function'
 			@next()
-	cometRoutes: ['cometDashboard','cometDashboardUsersNew','cometDashboardUsersView','cometDashboardUsersEdit','cometDashboardView','cometDashboardNew','cometDashboardEdit','cometDashboardDetail']
+	cometRoutes: ['cometDashboard','cometDashboardUsersNew','cometDashboardUsersView','cometDashboardUsersEdit','cometDashboardView','cometDashboardNew','cometDashboardEdit','cometDashboardDetail', 'cometDashboardConfig']
 	collectionLabel: (collection)->
-		if collection == 'Users'
+		if collection == 'config'
+			'Configure'
+		else if collection == 'Users'
 			'Users'
 		else if collection? and typeof CometConfig.collections[collection].label == 'string'
 			CometConfig.collections[collection].label
 		else Session.get 'comet_collection'
-	helpers: {
-
-	}
 
 CometDashboard.schemas.newUser = new SimpleSchema
 	email:

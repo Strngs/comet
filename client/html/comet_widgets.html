@@ -54,3 +54,17 @@
 		</a>
 	</div>
 </template>
+
+<template name="cometAdminLink">
+	{{#if isInRole 'superadmin' or isInRole 'admin'}}
+    <li>
+      <a class="{{ isActiveRoute regex='cometDashboard' }}" href="{{ pathFor 'cometDashboard' }}"><i class="fa fa-gears fa-fw"></i> Admin</a>
+    </li>
+	{{/if}}
+</template>
+
+<template name="cometAdminLinkSmall">
+	<li>
+		<a href="{{ pathFor 'cometDashboard' }}"><i class="fa fa-gears fa-fw"></i> Admin</a>
+	</li>
+</template>

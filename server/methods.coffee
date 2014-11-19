@@ -1,6 +1,6 @@
 Meteor.methods
 	cometInsertDoc: (doc,collection)->
-		if Roles.userIsInRole this.userId, ['admin']
+		if Roles.userIsInRole this.userId, ['superadmin', 'admin']
 			Future = Npm.require('fibers/future');
 			fut = new Future();
 
@@ -9,7 +9,7 @@ Meteor.methods
 			return fut.wait()
 
 	cometUpdateDoc: (modifier,collection,_id)->
-		if Roles.userIsInRole this.userId, ['admin']
+		if Roles.userIsInRole this.userId, ['superadmin', 'admin']
 			Future = Npm.require('fibers/future');
 			fut = new Future();
 			global[collection].update {_id:_id},modifier,(e,r)->
@@ -17,15 +17,14 @@ Meteor.methods
 			return fut.wait()
 
 	cometRemoveDoc: (collection,_id)->
-		if Roles.userIsInRole this.userId, ['admin']
+		if Roles.userIsInRole this.userId, ['superadmin', 'admin']
 			if collection == 'Users'
 				Meteor.users.remove {_id:_id}
 			else
 				global[collection].remove {_id:_id}
 
-
 	cometNewUser: (doc) ->
-		if Roles.userIsInRole this.userId, ['admin']
+		if Roles.userIsInRole this.userId, ['superadmin', 'admin']
 			emails = doc.email.split(',')
 			_.each emails, (email)->
 				user = {}
@@ -80,3 +79,6 @@ Meteor.methods
 
 	cometThrowUserError: (type, text) ->
 		console[type] text
+
+	cometUpdateGeneralConfig: () ->
+		console.log arguments

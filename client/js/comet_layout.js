@@ -76,6 +76,12 @@ Template.CometDashboardUsersView.rendered = function () {
 Template.CometDashboardView.rendered = function () {
 };
 
+Template.cometAdminLink.rednered = function() {
+};
+
+Template.cometAdminLinkSmall.rednered = function() {
+};
+
 (function($) {
   "use strict";
 

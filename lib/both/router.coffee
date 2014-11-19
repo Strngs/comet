@@ -16,6 +16,27 @@ Router.map ->
       Session.set 'comet_collection', ''
       Session.set 'comet_collection_page', ''
 
+  @route "cometDashboardConfig",
+    path: "/admin/config"
+    template: "CometDashboardConfig"
+    layoutTemplate: "CometLayout"
+    waitOn: ->
+      [
+        Meteor.subscribe 'cometGeneralConfig'
+        Meteor.subscribe 'cometWidgetConfig'
+        Meteor.subscribe 'cometAutoFormConfig'
+        Meteor.subscribe 'cometCollectionConfig'
+        Meteor.subscribe 'cometUsers'
+        Meteor.subscribe 'cometAllCollections'
+        Meteor.subscribe 'cometUser'
+      ]
+    action: ->
+      @render()
+    onAfterAction: ->
+      Session.set 'comet_title', 'Configure Comet'
+      Session.set 'comet_collection', ''
+      Session.set 'comet_collection_page', ''
+
   @route "cometDashboardUsersNew",
     path: "/admin/Users/new"
     template: "CometDashboardUsersNew"
@@ -75,7 +96,7 @@ Router.map ->
       Session.set 'comet_doc', Meteor.users.findOne({_id:@params._id})
 
   @route "cometDashboardView",
-    path: "/admin/:collection/"
+    path: "/admin/collection/:collection/"
     template: "CometDashboardView"
     layoutTemplate: "CometLayout"
     waitOn: ->
@@ -95,7 +116,7 @@ Router.map ->
     # onBeforeAction: ->
       # AccountsEntry.signInRequired this
   @route "cometDashboardNew",
-    path: "/admin/:collection/new"
+    path: "/admin/collection/:collection/new"
     template: "CometDashboardNew"
     layoutTemplate: "CometLayout"
     waitOn: ->
@@ -114,7 +135,7 @@ Router.map ->
     # onBeforeAction: ->
       # AccountsEntry.signInRequired this
   @route "cometDashboardEdit",
-    path: "/admin/:collection/:_id/edit"
+    path: "/admin/collection/:collection/:_id/edit"
     template: "CometDashboardEdit"
     layoutTemplate: "CometLayout"
     waitOn: ->
