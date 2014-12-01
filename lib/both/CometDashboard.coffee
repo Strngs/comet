@@ -6,8 +6,8 @@ formatters = {
 
 	edit: (id) ->
 		collection = Session.get 'comet_collection'
-		editHTML = formatters.link('/admin/' + collection + '/' + id + '/edit', formatters.icon('pencil'), 'hidden-xs btn btn-xs btn-primary')
-		editHTML += formatters.link('/admin/' + collection + '/' + id + '/edit', formatters.icon('pencil'), 'visible-xs btn btn-sm btn-primary')
+		editHTML = formatters.link('/admin/collection/' + collection + '/' + id + '/edit', formatters.icon('pencil'), 'hidden-xs btn btn-xs btn-primary')
+		editHTML += formatters.link('/admin/collection/' + collection + '/' + id + '/edit', formatters.icon('pencil'), 'visible-xs btn btn-sm btn-primary')
 		editHTML
 
 	formatDate: (date) ->
@@ -97,6 +97,7 @@ formatters = {
 
 CometDashboard =
 	schemas: {}
+	settings: {}
 	formatters: formatters
 	coreColumns: {
 		users:[
