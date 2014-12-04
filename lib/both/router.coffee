@@ -113,8 +113,7 @@ Router.map ->
       Session.set 'comet_subtitle', 'View '
       Session.set 'comet_collection_page', ''
       Session.set 'comet_collection', @params.collection.charAt(0).toUpperCase() + @params.collection.slice(1)
-    # onBeforeAction: ->
-      # AccountsEntry.signInRequired this
+
   @route "cometDashboardNew",
     path: "/admin/collection/:collection/new"
     template: "CometDashboardNew"
@@ -132,8 +131,7 @@ Router.map ->
       Session.set 'comet_subtitle', 'Create new'
       Session.set 'comet_collection_page', 'new'
       Session.set 'comet_collection', @params.collection.charAt(0).toUpperCase() + @params.collection.slice(1)
-    # onBeforeAction: ->
-      # AccountsEntry.signInRequired this
+
   @route "cometDashboardEdit",
     path: "/admin/collection/:collection/:_id/edit"
     template: "CometDashboardEdit"
@@ -154,8 +152,6 @@ Router.map ->
       Session.set 'comet_collection', @params.collection.charAt(0).toUpperCase() + @params.collection.slice(1)
       Session.set 'comet_id', @params._id
       Session.set 'comet_doc', window[@params.collection].findOne _id : @params._id
-    # onBeforeAction: ->
-      # AccountsEntry.signInRequired this
 
 Router.onBeforeAction CometDashboard.checkAdmin, {only: CometDashboard.cometRoutes}
 Router.onBeforeAction CometDashboard.clearAlerts, {only: CometDashboard.cometRoutes}
