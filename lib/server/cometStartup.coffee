@@ -1,13 +1,10 @@
 Meteor.startup ->
 	if typeof Meteor.settings != 'undefined' && typeof Meteor.settings.Comet != 'undefined' && typeof Meteor.settings.Comet.superadmin != 'undefined'
-		superEmail = Meteor.settings.Comet.superadmin
 		if Meteor.users.find().count() == 0
-			Accounts.createUser({
-				username: 'matt'
-				, password: 'test'
-				, email: superEmail
-			})
+			console.warn "To utilize Comet, please create an account with the superAdmin email defined in your Meteor.settings"
+			return
 
+		superEmail = Meteor.settings.Comet.superadmin
 		superUser = Meteor.users.find({
 			emails:
 				$elemMatch:
