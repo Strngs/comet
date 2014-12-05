@@ -64,7 +64,9 @@
 </template>
 
 <template name="cometAdminLinkSmall">
-	<li>
-		<a href="{{ pathFor 'cometDashboard' }}"><i class="fa fa-gears fa-fw"></i> Admin</a>
-	</li>
+	{{#if isInRole 'superadmin' or isInRole 'admin'}}
+		<li>
+			<a href="{{ pathFor 'cometDashboard' }}"><i class="fa fa-gears fa-fw"></i> Admin</a>
+		</li>
+	{{/if}}
 </template>
