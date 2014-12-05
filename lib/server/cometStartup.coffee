@@ -9,9 +9,10 @@ validateCometAdminUsers = (newUser, newUserId) ->
 			console.warn "[Comet]: If this is intended, for security remove the email from Meteor.settings!"
 
 	createSuperUsers =
-		new: (user) ->
-			console.log "adding new user " + newUser + "(" + newUserId + ") to superadmin role"
-			Roles.addUsersToRoles newUserId, 'superadmin'
+		new: (newUser, newUserId) ->
+			if !Roles.userIsInRole newUserId, 'superadmin'
+				console.log "adding new user " + newUser + "(" + newUserId + ") to superadmin role"
+				Roles.addUsersToRoles newUserId, 'superadmin'
 
 		single: (email) ->
 			superUser = Meteor.users.find({
@@ -87,7 +88,6 @@ Meteor.startup ->
 		if attempt.allowed
 			if typeof Meteor.settings.Comet.superadmin != 'undefined'
 				userCheck = attempt.user
-				console.warn userCheck.emails[0].address, userCheck._id
 				if _.contains(Meteor.settings.Comet.superadmin, userCheck.emails[0].address)
 					validateCometAdminUsers(userCheck.emails[0].address, userCheck._id)
 			return true
